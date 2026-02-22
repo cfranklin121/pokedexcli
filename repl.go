@@ -5,8 +5,6 @@ import (
 )
 
 func cleanInput(text string) []string {
-	trimmed := strings.TrimSpace(text)
-	lower := strings.ToLower(trimmed)
-	lst := strings.Fields(lower)
-	return lst
+	cleaned := strings.Fields(strings.ToLower(strings.TrimSpace(text)))
+	return cleaned
 }
