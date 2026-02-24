@@ -28,16 +28,25 @@ func main() {
 		text := scanner.Text()
 		input := cleanInput(text)
 
+		validCommand := false
 		for key := range commands {
 			if input[0] == key {
-				fmt.Println(commands[input[0]].description)
 				err := commands[input[0]].callback()
+				if input[0] == "help" {
+					for _, command := range commands {
+						fmt.Printf("%s: %s\n", command.name, command.description)
+					}
+				}
 				if err != nil {
 					fmt.Println(err)
 				}
-			} else {
-				fmt.Println("Unknown command")
+				validCommand = true
+				break
 			}
+		}
+
+		if validCommand == false {
+			fmt.Println("Unknown command")
 		}
 	}
 }
@@ -45,7 +54,7 @@ func main() {
 func commandExit() error {
 	fmt.Println("Closing Pokedex...Goodbye!")
 	os.Exit(0)
-	return fmt.Errorf("")
+	return nil
 }
 
 func commandHelp() error {
