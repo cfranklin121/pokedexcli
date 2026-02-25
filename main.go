@@ -22,23 +22,23 @@ func main() {
 		},
 	}
 
-	for {
+	for { //CLI loop
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
-		text := scanner.Text()
-		input := cleanInput(text)
+		text := cleanInput(scanner.Text())
+		input := text[0]
 
 		validCommand := false
-		for key := range commands {
-			if input[0] == key {
-				err := commands[input[0]].callback()
-				if input[0] == "help" {
+		for key := range commands { //check if command is in registry
+			if input == key {
+				err := commands[input].callback()
+				if input == "help" {
 					for _, command := range commands {
 						fmt.Printf("%s: %s\n", command.name, command.description)
 					}
 				}
 				if err != nil {
-					fmt.Println(err)
+					fmt.Println("Error:", err)
 				}
 				validCommand = true
 				break
@@ -49,15 +49,4 @@ func main() {
 			fmt.Println("Unknown command")
 		}
 	}
-}
-
-func commandExit() error {
-	fmt.Println("Closing Pokedex...Goodbye!")
-	os.Exit(0)
-	return nil
-}
-
-func commandHelp() error {
-	fmt.Println("Welcome to the Pokedex!\nUsage:")
-	return nil
 }
