@@ -8,7 +8,6 @@ import (
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
-
 	commands := map[string]cliCommand{
 		"exit": {
 			name:        "exit",
@@ -20,6 +19,21 @@ func main() {
 			description: "Displays a help message",
 			callback:    commandHelp,
 		},
+		"test": {
+			name:        "test",
+			description: "DEBUG: This is a test command",
+			callback:    commandTest,
+		},
+		"error": {
+			name:        "error",
+			description: "This command tests errors",
+			callback:    commandError,
+		},
+	}
+
+	var lst []cliCommand
+	for _, val := range commands {
+		lst = append(lst, val)
 	}
 
 	for { //CLI loop
@@ -28,24 +42,19 @@ func main() {
 		text := cleanInput(scanner.Text())
 		input := text[0]
 
-		validCommand := false
+		invalidCommand := true
 		for key := range commands { //check if command is in registry
 			if input == key {
-				err := commands[input].callback()
-				if input == "help" {
-					for _, command := range commands {
-						fmt.Printf("%s: %s\n", command.name, command.description)
-					}
-				}
+				err := commands[input].callback(lst) //Run commands callback function
 				if err != nil {
 					fmt.Println("Error:", err)
 				}
-				validCommand = true
+				invalidCommand = false
 				break
 			}
 		}
 
-		if validCommand == false {
+		if invalidCommand {
 			fmt.Println("Unknown command")
 		}
 	}
