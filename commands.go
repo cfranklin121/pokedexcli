@@ -12,7 +12,7 @@ type cliCommand struct {
 }
 
 func commandExit(commands []cliCommand) error {
-	fmt.Println("Closing Pokedex...Goodbye!")
+	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }
