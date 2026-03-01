@@ -8,18 +8,19 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func([]cliCommand) error
+	callback    func() error
 }
 
-func commandExit(commands []cliCommand) error {
+func commandExit() error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }
 
-func commandHelp(commands []cliCommand) error {
+func commandHelp() error {
 	fmt.Println("Welcome to the Pokedex!\nUsage:")
 	fmt.Println("")
+	commands := getCommands()
 	for _, command := range commands {
 		fmt.Printf("%s: %s\n", command.name, command.description)
 	}
@@ -27,13 +28,13 @@ func commandHelp(commands []cliCommand) error {
 }
 
 // DEBUG: Test command
-func commandTest(commands []cliCommand) error {
+func commandTest() error {
 	fmt.Println("Testing... complete")
 	return nil
 }
 
 // DEBUG: Error test
-func commandError(commands []cliCommand) error {
+func commandError() error {
 	fmt.Println("This function should return an error message")
 	err := fmt.Errorf("Error Message!")
 	return err

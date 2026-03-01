@@ -8,29 +8,8 @@ import (
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
-	commands := map[string]cliCommand{
-		"exit": {
-			name:        "exit",
-			description: "Exits the pokedex",
-			callback:    commandExit,
-		},
-		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
-		},
-		"test": {
-			name:        "test",
-			description: "DEBUG: This is a test command",
-			callback:    commandTest,
-		},
-		"error": {
-			name:        "error",
-			description: "This command tests errors",
-			callback:    commandError,
-		},
-	}
 
+	commands := getCommands()
 	var lst []cliCommand
 	for _, val := range commands {
 		lst = append(lst, val)
@@ -45,7 +24,7 @@ func main() {
 		invalidCommand := true
 		for key := range commands { //check if command is in registry
 			if input == key {
-				err := commands[input].callback(lst) //Run commands callback function
+				err := commands[input].callback() //Run commands callback function
 				if err != nil {
 					fmt.Println("Error:", err)
 				}
