@@ -26,6 +26,11 @@ func getCommands() map[string]cliCommand {
 			description: "This command tests errors",
 			callback:    commandError,
 		},
+		"map": {
+			name:        "map",
+			description: "List all the locations",
+			callback:    commandMap,
+		},
 	}
 
 	return commands
