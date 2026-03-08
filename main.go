@@ -43,9 +43,6 @@ func main() {
 		text := cleanInput(scanner.Text())
 		input := text[0]
 
-		//fmt.Println("DEBUG:")
-		//fmt.Println(config.Next)
-
 		invalidCommand := true
 		for key := range commands { //check if command is in registry
 			if input == key {
