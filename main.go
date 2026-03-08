@@ -2,10 +2,7 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 )
 
@@ -14,27 +11,9 @@ func main() {
 
 	commands := getCommands()
 	var lst []cliCommand
+	var config Config
 	for _, val := range commands {
 		lst = append(lst, val)
-	}
-
-	res, err := http.Get("https://pokeapi.co/api/v2/location-area/")
-	if err != nil {
-		fmt.Println("Error:", err)
-	}
-	body, err := io.ReadAll((res.Body))
-	res.Body.Close()
-	if res.StatusCode > 299 {
-		fmt.Printf("Response failed with status code %d\nMessage: %s", res.StatusCode, body)
-	}
-	if err != nil {
-		fmt.Println("Error:", err)
-	}
-
-	config := Config{}
-	err = json.Unmarshal(body, &config)
-	if err != nil {
-		fmt.Println("Error:", err)
 	}
 
 	for { //CLI loop
