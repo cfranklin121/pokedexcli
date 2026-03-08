@@ -7,15 +7,10 @@ import (
 )
 
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
-
 	commands := getCommands()
-	var lst []cliCommand
 	var config Config
-	for _, val := range commands {
-		lst = append(lst, val)
-	}
 
+	scanner := bufio.NewScanner(os.Stdin)
 	for { //CLI loop
 		fmt.Print("Pokedex > ")
 		scanner.Scan()

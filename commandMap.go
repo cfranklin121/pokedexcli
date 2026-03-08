@@ -56,6 +56,9 @@ func commandMap(config *Config) error {
 }
 
 func commandMapb(config *Config) error {
+	if config.Previous == "" {
+		return fmt.Errorf("No previous pages")
+	}
 	res, err := http.Get(config.Previous)
 	if err != nil {
 		return err
