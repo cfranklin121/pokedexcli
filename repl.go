@@ -4,41 +4,20 @@ import (
 	"strings"
 )
 
-func getCommands() map[string]cliCommand {
-	commands := map[string]cliCommand{
-		"exit": {
-			name:        "exit",
-			description: "Exits the pokedex",
-			callback:    commandExit,
-		},
-		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
-		},
-		"test": {
-			name:        "test",
-			description: "DEBUG: This is a test command",
-			callback:    commandTest,
-		},
-		"error": {
-			name:        "error",
-			description: "This command tests errors",
-			callback:    commandError,
-		},
-		"map": {
-			name:        "map",
-			description: "List all the locations",
-			callback:    commandMap,
-		},
-		"mapb": {
-			name:        "mapb",
-			description: "List previous locations",
-			callback:    commandMapb,
-		},
-	}
+type cliCommand struct {
+	name        string
+	description string
+	callback    func(*Config) error
+}
 
-	return commands
+type Config struct {
+	Count    int    `json:"count"`
+	Next     string `json:"next"`
+	Previous string `json:"previous"`
+	Results  []struct {
+		Name string `json:"name"`
+		URL  string `json:"url"`
+	} `json:"results"`
 }
 
 func cleanInput(text string) []string {
