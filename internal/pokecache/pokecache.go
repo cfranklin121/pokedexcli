@@ -15,11 +15,11 @@ type cacheEntry struct {
 	val       []byte
 }
 
-func (c *Cache) Add(key string) ([]byte, bool) {
+/*
+func (c *Cache) Add(key string, val []byte) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	//Add code
-	return []byte{}, false
 }
 
 func (c *Cache) Get(key string) ([]byte, bool) {
@@ -28,12 +28,12 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 	//Add code
 	return []byte{}, false
 }
-
+*/
 /*
 func NewCache(interval int) Cache {
-	new := Cache{
-		cache: make(map[string]cacheEntry),
-		mu: m,
-	}
+	wg := sync.WaitGroup{}
+	wg.Add(interval)
+	new := Cache{}
+	return new
 }
 */

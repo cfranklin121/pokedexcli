@@ -11,20 +11,20 @@ func commandMap(config *Config) error {
 	if len(config.Results) == 0 {
 		res, err := http.Get("https://pokeapi.co/api/v2/location-area/")
 		if err != nil {
-			fmt.Println("Error:", err)
+			return fmt.Errorf("Error: %s", err)
 		}
 		body, err := io.ReadAll((res.Body))
 		res.Body.Close()
 		if res.StatusCode > 299 {
-			fmt.Printf("Response failed with status code %d\nMessage: %s", res.StatusCode, body)
+			return fmt.Errorf("Response failed with status code %d\nMessage: %s", res.StatusCode, body)
 		}
 		if err != nil {
-			fmt.Println("Error:", err)
+			return fmt.Errorf("Error: %s", err)
 		}
 
 		err = json.Unmarshal(body, &config)
 		if err != nil {
-			fmt.Println("Error:", err)
+			return fmt.Errorf("Error: %s", err)
 		}
 	} else {
 
