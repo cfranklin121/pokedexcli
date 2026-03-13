@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
+
+	"github.com/cfranklin121/pokedexcli/internal/pokeapi"
 )
 
 func commandExplore(config *Config) error {
@@ -31,18 +31,7 @@ func commandExplore(config *Config) error {
 		return fmt.Errorf("Location not found")
 	}
 
-	res, err := http.Get(url)
-	if err != nil {
-		return fmt.Errorf("Error: %s", err)
-	}
-	body, err := io.ReadAll((res.Body))
-	res.Body.Close()
-	if res.StatusCode > 299 {
-		return fmt.Errorf("Response failed with status code %d\nMessage: %s", res.StatusCode, body)
-	}
-	if err != nil {
-		return fmt.Errorf("Error: %s", err)
-	}
+	body, err := pokeapi.GetApiData(url)
 
 	var area Area
 	err = json.Unmarshal(body, &area)

@@ -18,6 +18,8 @@ func main() {
 		input := text[0]
 		if input == "explore" && len(text) > 1 {
 			config.exploreInput = text[1]
+		} else {
+			config.exploreInput = ""
 		}
 
 		invalidCommand := true
