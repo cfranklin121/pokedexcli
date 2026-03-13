@@ -8,10 +8,18 @@ import (
 )
 
 func commandExplore(config *Config) error {
+	if config.location.Results == nil {
+		err := commandMap(config)
+		if err != nil {
+			return fmt.Errorf("Error: %s", err)
+		}
+	}
+
 	if config.exploreInput == "" {
 		return fmt.Errorf("Please enter city name")
 	}
 	var url string
+
 	for _, result := range config.location.Results {
 		if result.Name == config.exploreInput {
 			fmt.Printf("Exploring %s...\n", result.Name)
