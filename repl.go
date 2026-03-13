@@ -23,8 +23,9 @@ type Location struct {
 }
 
 type Config struct {
-	location Location
-	cache    pokecache.Cache
+	location     Location
+	cache        pokecache.Cache
+	exploreInput string
 }
 
 func cleanInput(text string) []string {

@@ -16,6 +16,9 @@ func main() {
 		scanner.Scan()
 		text := cleanInput(scanner.Text())
 		input := text[0]
+		if input == "explore" && len(text) > 1 {
+			config.exploreInput = text[1]
+		}
 
 		invalidCommand := true
 		for key := range commands { //check if command is in registry
