@@ -2,6 +2,8 @@ package main
 
 import (
 	"strings"
+
+	"github.com/cfranklin121/pokedexcli/internal/pokecache"
 )
 
 type cliCommand struct {
@@ -10,7 +12,7 @@ type cliCommand struct {
 	callback    func(*Config) error
 }
 
-type Config struct {
+type Location struct {
 	Count    int    `json:"count"`
 	Next     string `json:"next"`
 	Previous string `json:"previous"`
@@ -18,6 +20,11 @@ type Config struct {
 		Name string `json:"name"`
 		URL  string `json:"url"`
 	} `json:"results"`
+}
+
+type Config struct {
+	location Location
+	cache    pokecache.Cache
 }
 
 func cleanInput(text string) []string {

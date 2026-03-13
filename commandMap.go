@@ -8,7 +8,22 @@ import (
 )
 
 func commandMap(config *Config) error {
-	if len(config.Results) == 0 {
+	body, ok := config.cache.Get(config.location.Next) //Get response from cache
+	if ok {
+		err := json.Unmarshal(body, &config.location)
+		if err != nil {
+			return fmt.Errorf("Error: %s", err)
+
+		}
+		results := config.location.Results
+		for _, r := range results {
+			fmt.Println(r.Name)
+		}
+
+		return nil
+	}
+
+	if len(config.location.Results) == 0 {
 		res, err := http.Get("https://pokeapi.co/api/v2/location-area/")
 		if err != nil {
 			return fmt.Errorf("Error: %s", err)
@@ -22,13 +37,14 @@ func commandMap(config *Config) error {
 			return fmt.Errorf("Error: %s", err)
 		}
 
-		err = json.Unmarshal(body, &config)
+		err = json.Unmarshal(body, &config.location)
 		if err != nil {
 			return fmt.Errorf("Error: %s", err)
 		}
+		config.cache.Add(config.location.Next, body) //Add response to cache
 	} else {
 
-		res, err := http.Get(config.Next)
+		res, err := http.Get(config.location.Next)
 		if err != nil {
 			return fmt.Errorf("Error: %s", err)
 		}
@@ -41,13 +57,14 @@ func commandMap(config *Config) error {
 			return err
 		}
 
-		err = json.Unmarshal(body, &config)
+		err = json.Unmarshal(body, &config.location)
 		if err != nil {
 			return err
 		}
+		config.cache.Add(config.location.Next, body) //Add response to cache
 	}
 
-	results := config.Results
+	results := config.location.Results
 	for _, r := range results {
 		fmt.Println(r.Name)
 	}
@@ -56,10 +73,10 @@ func commandMap(config *Config) error {
 }
 
 func commandMapb(config *Config) error {
-	if config.Previous == "" {
+	if config.location.Previous == "" {
 		return fmt.Errorf("No previous pages")
 	}
-	res, err := http.Get(config.Previous)
+	res, err := http.Get(config.location.Previous)
 	if err != nil {
 		return err
 	}
@@ -72,12 +89,12 @@ func commandMapb(config *Config) error {
 		return err
 	}
 
-	err = json.Unmarshal(body, &config)
+	err = json.Unmarshal(body, &config.location)
 	if err != nil {
 		return err
 	}
 
-	results := config.Results
+	results := config.location.Results
 	for _, r := range results {
 		fmt.Println(r.Name)
 	}
