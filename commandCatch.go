@@ -3,12 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 
 	"github.com/cfranklin121/pokedexcli/internal/pokeapi"
 )
 
 func commandCatch(config *Config) error {
-	var catchChance int
 	baseUrl := "https://pokeapi.co/api/v2/pokemon/"
 	if config.commandArg == "" {
 		return fmt.Errorf("Please enter pokemon name")
@@ -27,8 +27,8 @@ func commandCatch(config *Config) error {
 
 	fmt.Printf("Throwing a Pokeball at %s...\n", pokemon.Name)
 
-	catchChance = 1
-	if catchChance < 1 {
+	catchChance := rand.Intn(100) + 200
+	if catchChance < pokemon.BaseExperience {
 		fmt.Printf("%s escaped!\n", pokemon.Name)
 		return nil
 	}
