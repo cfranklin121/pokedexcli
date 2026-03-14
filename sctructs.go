@@ -22,6 +22,7 @@ type Config struct {
 	location   Location
 	cache      pokecache.Cache
 	commandArg string
+	pokedex    map[string]Pokemon
 }
 
 type Area struct {

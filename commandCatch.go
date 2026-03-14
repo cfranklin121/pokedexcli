@@ -8,6 +8,7 @@ import (
 )
 
 func commandCatch(config *Config) error {
+	var catchChance int
 	baseUrl := "https://pokeapi.co/api/v2/pokemon/"
 	if config.commandArg == "" {
 		return fmt.Errorf("Please enter pokemon name")
@@ -24,7 +25,17 @@ func commandCatch(config *Config) error {
 		return fmt.Errorf("Error: %s", err)
 	}
 
-	fmt.Println(pokemon.Name)
-	fmt.Println(pokemon.BaseExperience)
+	fmt.Printf("Throwing a Pokeball at %s...\n", pokemon.Name)
+
+	catchChance = 1
+	if catchChance < 1 {
+		fmt.Printf("%s escaped!\n", pokemon.Name)
+		return nil
+	}
+	fmt.Printf("%s was caught!\n", pokemon.Name)
+	if config.pokedex == nil {
+		config.pokedex = make(map[string]Pokemon)
+	}
+	config.pokedex[pokemon.Name] = pokemon
 	return nil
 }

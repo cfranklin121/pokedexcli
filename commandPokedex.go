@@ -3,5 +3,8 @@ package main
 import "fmt"
 
 func commandPokedex(config *Config) error {
-	return fmt.Errorf("Not implemented yet\n")
+	for _, pokemon := range config.pokedex {
+		fmt.Println(pokemon.Name)
+	}
+	return nil
 }
