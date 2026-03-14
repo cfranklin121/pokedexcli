@@ -3,6 +3,9 @@ package main
 import "fmt"
 
 func commandInspect(config *Config) error {
+	if config.commandArg == "" {
+		return fmt.Errorf("Please enter pokemon name")
+	}
 	for _, pokemon := range config.pokedex {
 		if config.commandArg == pokemon.Name {
 			fmt.Printf("Name: %s\n", pokemon.Name)

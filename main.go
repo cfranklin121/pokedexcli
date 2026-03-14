@@ -27,7 +27,7 @@ func main() {
 			if input == key {
 				err := commands[input].callback(&config) //Run commands callback function
 				if err != nil {
-					fmt.Println("Error:", err)
+					fmt.Println(err)
 				}
 				invalidCommand = false
 				break
