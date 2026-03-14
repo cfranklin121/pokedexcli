@@ -16,10 +16,10 @@ func main() {
 		scanner.Scan()
 		text := cleanInput(scanner.Text())
 		input := text[0]
-		if input == "explore" && len(text) > 1 {
-			config.exploreInput = text[1]
+		if len(text) > 1 {
+			config.commandArg = text[1]
 		} else {
-			config.exploreInput = ""
+			config.commandArg = ""
 		}
 
 		invalidCommand := true

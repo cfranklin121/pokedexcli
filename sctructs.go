@@ -19,9 +19,9 @@ type Location struct {
 }
 
 type Config struct {
-	location     Location
-	cache        pokecache.Cache
-	exploreInput string
+	location   Location
+	cache      pokecache.Cache
+	commandArg string
 }
 
 type Area struct {

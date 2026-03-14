@@ -15,13 +15,13 @@ func commandExplore(config *Config) error {
 		}
 	}
 
-	if config.exploreInput == "" {
+	if config.commandArg == "" {
 		return fmt.Errorf("Please enter city name")
 	}
 	var url string
 
 	for _, result := range config.location.Results {
-		if result.Name == config.exploreInput {
+		if result.Name == config.commandArg {
 			fmt.Printf("Exploring %s...\n", result.Name)
 			url = result.URL
 			break
