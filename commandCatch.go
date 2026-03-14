@@ -16,7 +16,7 @@ func commandCatch(config *Config) error {
 
 	data, err := pokeapi.GetApiData(baseUrl + config.commandArg)
 	if err != nil {
-		return err
+		return fmt.Errorf("Pokemon not found")
 	}
 
 	var pokemon Pokemon
@@ -27,12 +27,13 @@ func commandCatch(config *Config) error {
 
 	fmt.Printf("Throwing a Pokeball at %s...\n", pokemon.Name)
 
-	catchChance := rand.Intn(100) + 200
+	catchChance := rand.Intn(100) + 150
 	if catchChance < pokemon.BaseExperience {
 		fmt.Printf("%s escaped!\n", pokemon.Name)
 		return nil
 	}
 	fmt.Printf("%s was caught!\n", pokemon.Name)
+	fmt.Println("You may now inspect it wit the inspect command")
 	if config.pokedex == nil {
 		config.pokedex = make(map[string]Pokemon)
 	}
